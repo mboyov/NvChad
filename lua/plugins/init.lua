@@ -1,76 +1,78 @@
 return {
+    -- Treesitter for syntax highlighting and code parsing
     {
         "nvim-treesitter/nvim-treesitter",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile" }, -- Load when opening a file or buffer
         config = function()
-            require("configs.treesitter")
+            require("configs.treesitter") -- Load custom treesitter configuration
         end,
     },
 
+    -- Neovim LSP configuration for language server support
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile" }, -- Load when editing a file
         config = function()
+            -- Load NvChad's default LSP settings first
             require("nvchad.configs.lspconfig").defaults()
+            -- Load custom LSP configurations
             require("configs.lspconfig")
         end,
     },
 
+    -- Mason plugin for managing LSP servers automatically
     {
         "williamboman/mason-lspconfig.nvim",
-        event = "VeryLazy",
-        dependencies = { "nvim-lspconfig" },
+        event = "VeryLazy", -- Load only when required
+        dependencies = { "nvim-lspconfig" }, -- Ensure lspconfig is loaded before this plugin
         config = function()
-            require("configs.mason-lspconfig")
+            require("configs.mason-lspconfig") -- Load Mason-specific LSP settings
         end,
     },
 
+    -- Linter integration for Neovim
     {
         "mfussenegger/nvim-lint",
-        event = { "BufReadPre", "BufNewFile" },
+        event = { "BufReadPre", "BufNewFile" }, -- Lint when files are opened or created
         config = function()
-            require("configs.lint")
+            require("configs.lint") -- Custom linter configurations
         end,
     },
 
+    -- Mason integration for nvim-lint to auto-install linters
     {
         "rshkarin/mason-nvim-lint",
-        event = "VeryLazy",
-        dependencies = { "nvim-lint" },
+        event = "VeryLazy", -- Load linters lazily to improve startup
+        dependencies = { "nvim-lint" }, -- Ensure nvim-lint is available first
         config = function()
-            require("configs.mason-lint")
+            require("configs.mason-lint") -- Custom Mason-lint setup
         end,
     },
 
+    -- Formatter plugin (Conform) for auto-formatting on save
     {
         "stevearc/conform.nvim",
-        event = "BufWritePre", -- uncomment for format on save
-        opts = require("configs.conform"),
+        event = "BufWritePre", -- Auto-format on save
+        opts = require("configs.conform"), -- Use custom configuration for formatting
     },
 
+    -- Mason integration for Conform to auto-install formatters
     {
         "zapling/mason-conform.nvim",
-        event = "VeryLazy",
-        dependencies = { "conform.nvim" },
+        event = "VeryLazy", -- Load when needed to keep the startup fast
+        dependencies = { "conform.nvim" }, -- Ensure Conform is available first
         config = function()
-            require("configs.mason-conform")
+            require("configs.mason-conform") -- Custom setup for Mason with Conform
         end,
     },
-    -- These are some examples, uncomment them if you want to see them work!
-    -- {
-    --     "neovim/nvim-lspconfig",
-    --     config = function()
-    --         require("configs.lspconfig")
-    --     end,
-    -- },
 
-    -- {
-    -- 	"nvim-treesitter/nvim-treesitter",
-    -- 	opts = {
-    -- 		ensure_installed = {
-    -- 			"vim", "lua", "vimdoc",
-    --      "html", "css"
-    -- 		},
-    -- 	},
-    -- },
+    -- Lazygit for in-editor Git management
+    {
+        "kdheepak/lazygit.nvim",
+        event = "VeryLazy", -- Load only when needed for git operations
+        dependencies = { "nvim-lua/plenary.nvim" }, -- Use Plenary for floating window handling
+        config = function()
+            require("configs.lazygit").setup() -- Load the configuration from lazygit.lua
+        end,
+    },
 }
