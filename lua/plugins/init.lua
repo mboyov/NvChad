@@ -75,4 +75,13 @@ return {
             require("configs.lazygit").setup() -- Load the configuration from lazygit.lua
         end,
     },
+
+    -- Neovim and tmux navigation
+    {
+        "christoomey/vim-tmux-navigator",
+        lazy = false, -- Load immediately to avoid navigation conflicts
+        config = function()
+            -- No additional configuration needed as the plugin works out of the box
+        end,
+    },
 }
