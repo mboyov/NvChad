@@ -5,7 +5,7 @@ local options = {
         { "<leader>lc", "<cmd>LazyGitConfig<cr>", desc = "LazyConfig" }, -- Open LazyGit configuration
         { "<leader>lgf", "<cmd>LazyGitCurrentFile<cr>", desc = "LazyGitCurrentFile" }, -- Open LazyGit for the current file
         { "<leader>lf", "<cmd>LazyGitFilter<cr>", desc = "LazyGitFilter" }, -- Filter changes using LazyGit
-        { "<leader>lgw", "<cmd>LazyGitFilterCurrentFile<cr>", desc = "LazyGitFilterCurrentFile" }, -- Filter changes for the current file with LazyGit
+        { "<leader>lgw", "<cmd>LazyGitFilterCurrentFile<cr>", desc = "LazyGitFilterCurrentFile" }, -- Filter changes with LazyGit
     },
 
     -- Commands to be loaded for LazyGit functionality

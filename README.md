@@ -41,7 +41,16 @@ This project provides a custom Neovim configuration based on [NvChad 2.5 by Prog
 
 To use this Neovim configuration, follow these steps:
 
-1. Uninstall
+1. Prerequisite
+
+```bash
+brew install luarocks
+brew install fzf
+brew install lazygit
+git clone https://github.com/junegunn/fzf-git.sh.git ~/.
+```
+
+2. Uninstall
 
 ```bash
 # Linux / MacOS (unix)
@@ -63,13 +72,14 @@ rm -Force ~\AppData\Local\nvim
 rm -Force ~\AppData\Local\nvim-data
 
 ```
-2. Clone the repository:
+3. Clone the repository:
+
 ```bash
    git clone https://github.com/mboyov/NvChad.git ~/.config/nvim && nvim
 ````
 **This repo is supposed to used as config by NvChad users!**
 
-- The main nvchad repo (NvChad/NvChad) is used as a plugin by this repo.
+- The main nvchad repo  [NvChad/NvChad](https://github.com/NvChad/NvChad) is used as a plugin by this repo.
 - So you just import its modules , like `require "nvchad.options" , require "nvchad.mappings"`
 - So you can delete the .git from this repo ( when you clone it locally ) or fork it :)
 
@@ -80,7 +90,6 @@ Feel free to open issues or pull requests if you have suggestions for improvemen
 This project is licensed under the MIT License.
 
 ## Credits
-
 - [Lazyvim starter](https://github.com/LazyVim/starter) as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
 
 [contributors-shield]: https://img.shields.io/github/contributors/mboyov/NvChad.svg?style=for-the-badge

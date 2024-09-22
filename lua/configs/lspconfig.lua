@@ -14,10 +14,11 @@ local lspconfig = require("lspconfig")
 -- This example configures the lua_ls (Lua Language Server).
 lspconfig.servers = {
     "lua_ls",
+    "pyright",
 }
 
 -- Define a list of LSP servers that will use the default configuration.
-local default_servers = {}
+local default_servers = { "pyright" }
 
 -- Loop through the list of servers with default configuration and apply them
 for _, lsp in ipairs(default_servers) do

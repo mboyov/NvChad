@@ -3,7 +3,6 @@ local options = {
     -- List of languages for which Treesitter parsers should be installed
     ensure_installed = {
         "bash", -- Bash scripting language
-        "fish", -- Fish shell scripting language
         "lua", -- Lua programming language
         "luadoc", -- Lua documentation parser
         "markdown", -- Markdown formatting language
@@ -12,6 +11,29 @@ local options = {
         "vim", -- Vim script language
         "vimdoc", -- Vim documentation parser
         "yaml", -- YAML configuration language
+        "html",
+        "css",
+        "dockerfile",
+        "gpg",
+        "htmldjango",
+        "http",
+        "javascript",
+        "jsdoc",
+        "json",
+        "make",
+        "nginx",
+        "php",
+        "phpdoc",
+        "powershell",
+        "python",
+        "regex",
+        "scss",
+        "sql",
+        "ssh_config",
+        "tmux",
+        "typescript",
+        "xml",
+        "ini",
     },
 
     -- Syntax highlighting configuration

@@ -6,11 +6,11 @@ local options = {
         -- html = { "prettier" }, -- Uncomment to use "prettier" for HTML files
     },
 
-    -- Define custom formatters (if needed)
-    formatters = {
-        -- stylua = {},    -- Add custom settings for the Stylua formatter
-        -- prettier = {},  -- Add custom settings for the Prettier formatter
-    },
+    -- -- Define custom formatters (if needed)
+    -- formatters = {
+    --     -- stylua = {},    -- Add custom settings for the Stylua formatter
+    --     -- prettier = {},  -- Add custom settings for the Prettier formatter
+    -- },
 
     -- Configuration for formatting on save
     format_on_save = {
