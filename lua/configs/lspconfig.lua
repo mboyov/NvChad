@@ -15,10 +15,16 @@ local lspconfig = require("lspconfig")
 lspconfig.servers = {
     "lua_ls",
     "pyright",
+    "dockerls",
+    "yamlls",
+    "ts_ls",
+    "eslint",
+    "sqlls",
+    "intelephense",
 }
 
 -- Define a list of LSP servers that will use the default configuration.
-local default_servers = { "pyright" }
+local default_servers = { "pyright", "dockerls", "yamlls", "ts_ls", "eslint", "sqlls", "intelephense" }
 
 -- Loop through the list of servers with default configuration and apply them
 for _, lsp in ipairs(default_servers) do
