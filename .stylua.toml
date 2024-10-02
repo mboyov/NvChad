@@ -1,6 +1,20 @@
-column_width = 120
-line_endings = "Unix"
-indent_type = "Spaces"
-indent_width = 4
-quote_style = "AutoPreferDouble"
-#call_parentheses = "None"
+# Configuration settings for formatting or linting tools
+
+# Maximum allowed width of a line in the code editor
+column_width = 120  # Sets the maximum column width to 120 characters
+
+# The type of line endings to use in the files
+line_endings = "Unix"  # Use Unix-style line endings (LF), as opposed to Windows (CRLF)
+
+# The type of indentation to use: either spaces or tabs
+indent_type = "Spaces"  # Specifies that indentation should be done using spaces, not tabs
+
+# The number of spaces to use for each indentation level
+indent_width = 4  # Each indentation level will be 4 spaces wide
+
+# The preferred style for quotes in strings
+quote_style = "AutoPreferDouble"  # Automatically prefer double quotes for strings, but adapt if necessary
+
+# The style for parentheses around function calls (if applicable)
+# Uncomment the following line if you want to configure parentheses usage around function calls
+# call_parentheses = "None"  # Specifies that no parentheses should be used around function calls
