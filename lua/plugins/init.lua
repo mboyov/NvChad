@@ -84,4 +84,12 @@ return {
             -- No additional configuration needed as the plugin works out of the box
         end,
     },
+
+    {
+        "zbirenbaum/copilot.lua",
+        event = "InsertEnter",
+        config = function()
+            require("configs.copilot") -- Charge simplement la configuration
+        end,
+    },
 }
