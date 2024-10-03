@@ -46,6 +46,8 @@ function _G.set_terminal_keymaps()
     vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
     vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
     vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+    -- Map Ctrl+t to enter normal mode more easily in terminal
+    vim.api.nvim_buf_set_keymap(0, "t", "<C-t>", "<C-\\><C-N>", term_opts)
 end
 
 -- Automatically set these keymaps when opening a terminal
