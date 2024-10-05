@@ -7,7 +7,7 @@ local M = {}
 
 -- Base46 configuration, which controls theme and highlights in NvChad
 M.base46 = {
-    theme = "catppuccin", -- Sets the color scheme to "catppuccin" (a popular, aesthetically pleasing theme)
+    theme = "tokyonight", -- Sets the color scheme to "tokyonight" (a popular, aesthetically pleasing theme)
     transparency = true, -- Enables transparent background in the Neovim UI
 
     -- Highlight override options:
