@@ -66,16 +66,6 @@ return {
         end,
     },
 
-    -- Lazygit for in-editor Git management
-    {
-        "kdheepak/lazygit.nvim",
-        event = "VeryLazy", -- Load only when needed for git operations
-        dependencies = { "nvim-lua/plenary.nvim" }, -- Use Plenary for floating window handling
-        config = function()
-            require("configs.lazygit").setup() -- Load the configuration from lazygit.lua
-        end,
-    },
-
     -- Neovim and tmux navigation
     {
         "christoomey/vim-tmux-navigator",

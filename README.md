@@ -46,7 +46,6 @@ To use this Neovim configuration, follow these steps:
 ```bash
 brew install luarocks
 brew install fzf
-brew install lazygit
 git clone https://github.com/junegunn/fzf-git.sh.git ~/.
 ```
 
