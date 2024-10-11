@@ -74,4 +74,15 @@ return {
             -- No additional configuration needed as the plugin works out of the box
         end,
     },
+
+    -- Load 'trouble.nvim' plugin, which provides a diagnostics list and quickfix management
+    {
+        "folke/trouble.nvim",
+        event = { "BufReadPre", "BufNewFile" }, -- Lint diagnostics will be triggered on these events
+        -- 'trouble.nvim' depends on 'nvim-web-devicons' for file icons in the diagnostics list
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        config = function()
+            require("configs.trouble")
+        end,
+    },
 }
