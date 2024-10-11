@@ -28,6 +28,18 @@ lint.linters.luacheck.args = {
     "-", -- Read input from stdin (required for Neovim integration)
 }
 
+-- Configure specific arguments for Stylelint
+lint.linters.stylelint = {
+    cmd = "npx stylelint", -- Command to run Stylelint
+    args = {
+        "--stdin", -- Read input from stdin (required for Neovim integration)
+        "--stdin-filename",
+        "%:p", -- Specify the filename (used for resolving configurations)
+        "--fix", -- Apply automatic fixes if possible
+    },
+    stdin = true, -- Read from stdin
+}
+
 -- Create an autocommand to automatically lint files on certain events
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
     -- The callback triggers linting when the following events happen:
