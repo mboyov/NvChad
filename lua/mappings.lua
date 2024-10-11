@@ -52,3 +52,26 @@ end
 
 -- Automatically set these keymaps when opening a terminal
 vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+-- Mappings for navigating diagnostics with Trouble.nvim
+
+-- ----------------------
+-- Trouble.nvim Mappings
+-- ----------------------
+
+-- Function to simplify Trouble.nvim mappings
+local function trouble_map(key, command, description)
+    map("n", key, "<cmd>" .. command .. "<CR>", { desc = description, noremap = true, silent = true })
+end
+
+-- Mappings for navigating diagnostics with Trouble.nvim
+trouble_map("<leader>tx", "Trouble diagnostics toggle", "Diagnostics Trouble")
+trouble_map("<leader>tX", "Trouble diagnostics toggle filter.buf=0", "Diagnostics Trouble Buffer")
+trouble_map("<leader>ts", "Trouble symbols toggle focus=false", "Trouble symbols")
+trouble_map(
+    "<leader>tl",
+    "Trouble lsp toggle focus=false win.position=right",
+    "Trouble LSP Definitions / references / ..."
+)
+trouble_map("<leader>tL", "Trouble loclist toggle", "Trouble Location List")
+trouble_map("<leader>tQ", "Trouble qflist toggle", "Trouble Quickfix List")

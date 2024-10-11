@@ -4,7 +4,7 @@
 local function apply_prettier_to_languages(languages)
     local formatters = {}
     for _, lang in ipairs(languages) do
-        formatters[lang] = { "prettier" }
+        formatters[lang] = { "prettier" } -- Apply prettier with default configuration
     end
     return formatters
 end
@@ -12,29 +12,35 @@ end
 -- Languages that should use prettier
 local prettier_languages = { "javascript", "typescript", "html", "css", "yaml", "json" }
 
--- Table containing the configuration options for conform.nvim
+-- Configuration table for conform.nvim
 local options = {
     -- Specify formatters for each file type (ft)
     formatters_by_ft = vim.tbl_extend("force", {
         -- Use "stylua" to format Lua files
         lua = { "stylua" },
 
-        -- Use "black" to format Python files
-        python = { "black" },
+        -- Use "black" and "isort" to format and sort imports in Python files
+        python = { "black", "isort" },
 
-        -- Use the LSP "intelephense" to format PHP files
-        php = { "intelephense" },
+        -- Use "phpcsfixer" to format PHP files
+        php = { "phpcsfixer" },
 
-        -- Add other formatters here if needed for other languages
+        -- Use "shfmt" to format Shell scripts
+        sh = { "shfmt" },
+
+        -- Add other formatters here if needed
     }, apply_prettier_to_languages(prettier_languages)),
 
-    -- Configuration for formatting on save
+    -- Formatting on save
     format_on_save = {
-        -- Set a timeout for the formatting process (in milliseconds)
-        timeout_ms = 500,
+        timeout_ms = 1000, -- Increase timeout to avoid issues with large files
+        lsp_fallback = true, -- Use LSP formatter if no specific formatter is configured
+    },
 
-        -- Use LSP formatter if no specific formatter is configured
-        lsp_fallback = true,
+    -- You could also add configuration options for specific formatters here
+    formatter_options = {
+        black = { extra_args = { "--line-length", "88" } }, -- Custom black configuration
+        prettier = { extra_args = { "--single-quote", "--trailing-comma", "es5" } }, -- Prettier options
     },
 }
 

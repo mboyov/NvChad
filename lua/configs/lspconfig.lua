@@ -10,22 +10,20 @@ local capabilities = require("nvchad.configs.lspconfig").capabilities
 -- Load lspconfig for managing LSP servers
 local lspconfig = require("lspconfig")
 
--- Define a list of all configured LSP servers.
--- This example configures the lua_ls (Lua Language Server).
+-- List of all LSP servers configured for your environment
 lspconfig.servers = {
-    "lua_ls",
-    "pyright",
-    "dockerls",
-    "yamlls",
-    "ts_ls",
-    "sqlls",
-    "intelephense",
+    "lua_ls", -- Lua language server
+    "pyright", -- Python language server
+    "dockerls", -- Docker language server
+    "yamlls", -- YAML language server
+    "ts_ls", -- TypeScript language server
+    "sqlls", -- SQL language server
+    "intelephense", -- PHP language server
 }
-
--- Define a list of LSP servers that will use the default configuration.
+-- Default LSP server configurations
 local default_servers = { "pyright", "dockerls", "yamlls", "ts_ls", "sqlls", "intelephense" }
 
--- Loop through the list of servers with default configuration and apply them
+-- Loop through the list and apply default configurations
 for _, lsp in ipairs(default_servers) do
     lspconfig[lsp].setup({
         on_attach = on_attach,
@@ -34,53 +32,31 @@ for _, lsp in ipairs(default_servers) do
     })
 end
 
--- Setup lua_ls with custom settings for Lua development.
+-- Lua language server with custom settings
 lspconfig.lua_ls.setup({
     on_attach = on_attach,
     on_init = on_init,
     capabilities = capabilities,
 
-    -- Custom settings for the Lua Language Server.
+    -- Custom settings for the Lua Language Server
     settings = {
         Lua = {
             diagnostics = {
-                enable = false, -- Disable all diagnostics from lua_ls.
-                -- Optionally, you can declare global variables here.
-                -- globals = { "vim" },
+                enable = false, -- Disable diagnostics from lua_ls
+                -- You can declare global variables here if needed
             },
             workspace = {
                 library = {
-                    -- Add Neovim runtime files and other specific libraries for workspace awareness.
+                    -- Add Neovim runtime files and other specific libraries
                     vim.fn.expand("$VIMRUNTIME/lua"),
                     vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
                     vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types",
                     vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
-                    "${3rd}/love2d/library", -- Add custom 3rd party libraries, such as Love2D.
+                    "${3rd}/love2d/library", -- Add 3rd party libraries like Love2D
                 },
-                maxPreload = 100000, -- Set the maximum number of files to preload.
-                preloadFileSize = 10000, -- Preload only files smaller than this size (in KB).
+                maxPreload = 100000, -- Maximum files to preload
+                preloadFileSize = 10000, -- Preload files smaller than this size (in KB)
             },
         },
     },
 })
-
--- -- EXAMPLE CONFIGURATION
--- The example below shows how to configure multiple LSP servers, such as HTML and CSS.
--- local servers = { "html", "cssls" }
--- local nvlsp = require "nvchad.configs.lspconfig"
---
--- -- Apply the default setup to each LSP in the list.
--- for _, lsp in ipairs(servers) do
---   lspconfig[lsp].setup {
---     on_attach = nvlsp.on_attach,
---     on_init = nvlsp.on_init,
---     capabilities = nvlsp.capabilities,
---   }
--- end
-
--- Example of configuring a single LSP server, in this case, TypeScript (ts_ls).
--- lspconfig.ts_ls.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
--- }

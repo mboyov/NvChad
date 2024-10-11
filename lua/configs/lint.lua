@@ -1,30 +1,40 @@
--- Import the 'lint' module to configure linting for various file types
+-- Import the 'lint' module to set up linting for different file types
 local lint = require("lint")
 
--- Define linters to be used for specific file types
+-- Specify linters for each file type
 lint.linters_by_ft = {
-    lua = { "luacheck" }, -- Use 'luacheck' as the linter for Lua files
+    lua = { "luacheck" }, -- Use 'luacheck' for linting Lua files
+    sh = { "shellcheck" }, -- Use 'shellcheck' for linting shell scripts
+    php = { "phpcs" }, -- Use 'phpcs' for PHP linting
+    javascript = { "eslint_d" }, -- Use 'eslint_d' for JavaScript linting
+    typescript = { "eslint_d" }, -- Use 'eslint_d' for TypeScript linting
+    python = { "flake8", "pylint" }, -- Use both 'flake8' and 'pylint' for Python linting
+    html = { "stylelint" }, -- Use 'stylelint' for HTML linting
+    css = { "stylelint" }, -- Use 'stylelint' for CSS linting
+    yaml = { "yamllint" }, -- Use 'yamllint' for YAML linting
+    dockerfile = { "hadolint" }, -- Use 'hadolint' for Dockerfile linting
+    json = { "jsonlint" }, -- Use 'jsonlint' for JSON linting
 }
 
--- Configure the arguments to be passed to the 'luacheck' linter
+-- Define specific arguments to be passed to the 'luacheck' linter
 lint.linters.luacheck.args = {
-    "--globals", -- Specify global variables to ignore
-    "love", -- Add 'love' as a global (for Love2D development)
-    "vim", -- Add 'vim' as a global (for Neovim development)
-    "--formatter", -- Set the output format of the linter
-    "plain", -- Use plain text format for linter output
-    "--codes", -- Show the diagnostic codes in the output
-    "--ranges", -- Show the code ranges for warnings and errors
-    "-", -- Read input from stdin (necessary for Neovim integration)
+    "--globals", -- Ignore specified global variables
+    "love", -- Add 'love' as a global (commonly used in Love2D projects)
+    "vim", -- Add 'vim' as a global (used in Neovim-related scripts)
+    "--formatter", -- Set the output format for luacheck
+    "plain", -- Use plain text output format
+    "--codes", -- Show error/warning codes in the output
+    "--ranges", -- Display code ranges where warnings or errors occur
+    "-", -- Read input from stdin (required for Neovim integration)
 }
 
--- Create an autocommand to trigger linting automatically on specific events
+-- Create an autocommand to automatically lint files on certain events
 vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost", "InsertLeave" }, {
-    -- This callback will try to lint the buffer whenever these events are triggered:
-    -- - BufEnter: when entering the buffer
-    -- - BufWritePost: after writing to the buffer
-    -- - InsertLeave: when exiting insert mode
+    -- The callback triggers linting when the following events happen:
+    -- - BufEnter: when entering a buffer
+    -- - BufWritePost: after saving changes to a file
+    -- - InsertLeave: when leaving insert mode
     callback = function()
-        lint.try_lint() -- Try to lint the current buffer
+        lint.try_lint() -- Attempt to lint the current buffer
     end,
 })
