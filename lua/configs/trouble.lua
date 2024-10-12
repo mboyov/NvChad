@@ -6,6 +6,6 @@ trouble.setup({
     auto_close = true, -- Automatically close Trouble if there are no diagnostics
     use_diagnostic_signs = true, -- Use diagnostic signs in the gutter
     modes = {
-        diagnostics = { auto_open = true }, -- Automatically open Trouble for diagnostics mode
+        diagnostics = { auto_open = false }, -- Automatically open Trouble for diagnostics mode
     },
 })
