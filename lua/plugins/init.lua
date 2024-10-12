@@ -85,4 +85,14 @@ return {
             require("configs.trouble")
         end,
     },
+
+    {
+        -- Live Preview Plugin
+        "brianhuster/live-preview.nvim",
+        dependencies = { "brianhuster/autosave.nvim" }, -- Optional dependency for autosaving
+        event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a file
+        config = function()
+            require("configs.live-preview") -- Load custom live-preview configuration
+        end,
+    },
 }
