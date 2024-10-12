@@ -19,6 +19,7 @@ lspconfig.servers = {
     "ts_ls", -- TypeScript language server
     "sqlls", -- SQL language server
     "intelephense", -- PHP language server
+    "emmet_ls", -- PHP language server
 }
 -- Default LSP server configurations
 local default_servers = { "pyright", "dockerls", "yamlls", "ts_ls", "sqlls", "intelephense" }
@@ -56,6 +57,33 @@ lspconfig.lua_ls.setup({
                 },
                 maxPreload = 100000, -- Maximum files to preload
                 preloadFileSize = 10000, -- Preload files smaller than this size (in KB)
+            },
+        },
+    },
+})
+
+lspconfig.emmet_ls.setup({
+    -- on_attach = on_attach,
+    capabilities = capabilities,
+    filetypes = {
+        "css",
+        "eruby",
+        "html",
+        "javascript",
+        "javascriptreact",
+        "less",
+        "sass",
+        "scss",
+        "svelte",
+        "pug",
+        "typescriptreact",
+        "vue",
+    },
+    init_options = {
+        html = {
+            options = {
+                -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
+                ["bem.enabled"] = true,
             },
         },
     },
