@@ -12,6 +12,7 @@ lint.linters_by_ft = {
     yaml = { "yamllint" }, -- Use 'yamllint' for YAML files
     dockerfile = { "hadolint" }, -- Use 'hadolint' for Dockerfiles
     json = { "jsonlint" }, -- Use 'jsonlint' for JSON files
+    html = { "htmlhint" }, --
 }
 
 -- Define specific arguments to be passed to the 'luacheck' linter
