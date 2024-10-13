@@ -19,10 +19,13 @@ lspconfig.servers = {
     "ts_ls", -- TypeScript language server
     "sqlls", -- SQL language server
     "intelephense", -- PHP language server
-    "emmet_ls", -- PHP language server
+    "emmet_ls", --
+    "html", --
+    "cssls", --
+    "bashls", --
 }
 -- Default LSP server configurations
-local default_servers = { "pyright", "dockerls", "yamlls", "ts_ls", "sqlls", "intelephense" }
+local default_servers = { "pyright", "dockerls", "yamlls", "ts_ls", "sqlls", "intelephense", "html", "cssls", "bashls" }
 
 -- Loop through the list and apply default configurations
 for _, lsp in ipairs(default_servers) do
@@ -78,6 +81,7 @@ lspconfig.emmet_ls.setup({
         "pug",
         "typescriptreact",
         "vue",
+        "php",
     },
     init_options = {
         html = {

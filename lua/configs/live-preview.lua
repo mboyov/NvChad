@@ -1,4 +1,4 @@
-local live_preview = require("live-preview")
+local live_preview = require("livepreview")
 
 live_preview.setup({
     port = 5500, -- ou tout autre port de ton choix

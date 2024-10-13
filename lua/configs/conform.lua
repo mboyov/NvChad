@@ -28,6 +28,8 @@ local options = {
         -- Use "shfmt" to format Shell scripts
         sh = { "shfmt" },
 
+        sql = { "sqlfmt" },
+
         -- Add other formatters here if needed
     }, apply_prettier_to_languages(prettier_languages)),
 
