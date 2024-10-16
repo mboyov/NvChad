@@ -1,8 +1,8 @@
 local live_preview = require("livepreview")
 
 live_preview.setup({
-    port = 5500, -- ou tout autre port de ton choix
-    browser = "default", -- Ou spécifie ton navigateur, par exemple "firefox", "chrome"
+    port = 3000, --
+    browser = "default", --
     commands = {
         start = "LivePreview",
         stop = "StopPreview",

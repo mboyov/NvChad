@@ -23,7 +23,7 @@ local options = {
         python = { "black", "isort" },
 
         -- Use "phpcsfixer" to format PHP files
-        php = { "phpcsfixer" },
+        php = { "php-cs-fixer" },
 
         -- Use "shfmt" to format Shell scripts
         sh = { "shfmt" },
