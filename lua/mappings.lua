@@ -1,77 +1,64 @@
 -- Import NvChad default mappings
 require("nvchad.mappings")
 
--- Utility for mapping keys
+-- Utility for mapping keys with options
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true } -- Default options for all mappings
 
--- ----------------------
--- Custom Key Mappings
--- ----------------------
+-- Default mode for mappings
+local default_mode = "n"
 
--- Enter command mode with ;
-map("n", ";", ":", { desc = "Enter command mode" })
+-- Define all mappings
+local mappings = {
+    -- Custom Key Mappings
+    { key = ";", cmd = ":", desc = "Enter command mode" }, -- Default mode is "n"
+    { mode = "i", key = "jk", cmd = "<ESC>", desc = "Quick exit insert mode" },
+    { mode = { "n", "i", "v" }, key = "<C-s>", cmd = "<cmd>w<CR>", desc = "Save file" },
 
--- Insert mode escape shortcut (quick exit)
-map("i", "jk", "<ESC>", { desc = "Quick exit insert mode" })
-
--- Save file in normal, insert, and visual modes with Ctrl + s
-map({ "n", "i", "v" }, "<C-s>", "<cmd>w<CR>", { desc = "Save file" })
-
--- ----------------------
--- Tmux Navigation Mappings
--- ----------------------
-
--- Map Tmux-like navigation to Control + hjkl without prefix
-local tmux_maps = {
+    -- Tmux Navigation Mappings (default to normal mode)
     { key = "<C-h>", cmd = "<cmd>TmuxNavigateLeft<CR>", desc = "Navigate left" },
     { key = "<C-j>", cmd = "<cmd>TmuxNavigateDown<CR>", desc = "Navigate down" },
     { key = "<C-k>", cmd = "<cmd>TmuxNavigateUp<CR>", desc = "Navigate up" },
     { key = "<C-l>", cmd = "<cmd>TmuxNavigateRight<CR>", desc = "Navigate right" },
+
+    -- Trouble.nvim Mappings
+    { key = "<leader>tx", cmd = "Trouble diagnostics toggle", desc = "Diagnostics Trouble" },
+    { key = "<leader>tX", cmd = "Trouble diagnostics toggle filter.buf=0", desc = "Diagnostics Trouble Buffer" },
+    { key = "<leader>ts", cmd = "Trouble symbols toggle focus=false", desc = "Trouble symbols" },
+    {
+        key = "<leader>tl",
+        cmd = "Trouble lsp toggle focus=false win.position=right",
+        desc = "Trouble LSP Definitions / references / ...",
+    },
+    { key = "<leader>tL", cmd = "Trouble loclist toggle", desc = "Trouble Location List" },
+    { key = "<leader>tQ", cmd = "Trouble qflist toggle", desc = "Trouble Quickfix List" },
+
+    -- Terminal Mode Navigation Mappings (applied dynamically)
+    { mode = "t", key = "<C-h>", cmd = "<C-\\><C-N><C-w>h" },
+    { mode = "t", key = "<C-j>", cmd = "<C-\\><C-N><C-w>j" },
+    { mode = "t", key = "<C-k>", cmd = "<C-\\><C-N><C-w>k" },
+    { mode = "t", key = "<C-l>", cmd = "<C-\\><C-N><C-w>l" },
+    { mode = "t", key = "<C-t>", cmd = "<C-\\><C-N>" }, -- Quick exit to normal mode in terminal
 }
 
--- Apply Tmux navigation mappings for normal mode
-for _, mapping in ipairs(tmux_maps) do
-    map("n", mapping.key, mapping.cmd, vim.tbl_extend("force", opts, { desc = mapping.desc }))
+-- Apply all mappings in one step
+for _, mapping in ipairs(mappings) do
+    local mode = mapping.mode or default_mode -- Use default mode if not specified
+    local description = mapping.desc or "" -- Description is optional
+
+    if mode == "t" then
+        -- Special case: apply terminal mappings dynamically
+        vim.cmd(
+            "autocmd! TermOpen term://* lua vim.api.nvim_buf_set_keymap(0, '"
+                .. mode
+                .. "', '"
+                .. mapping.key
+                .. "', '"
+                .. mapping.cmd
+                .. "', { noremap = true, silent = true })"
+        )
+    else
+        -- Apply other mappings immediately
+        map(mode, mapping.key, mapping.cmd, vim.tbl_extend("force", opts, { desc = description }))
+    end
 end
-
--- ----------------------
--- Terminal Mode Navigation Mappings (Tmux style)
--- ----------------------
-
--- Function to set terminal keymaps for navigation
-function _G.set_terminal_keymaps()
-    local term_opts = { noremap = true, silent = true }
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
-    -- Map Ctrl+t to enter normal mode more easily in terminal
-    vim.api.nvim_buf_set_keymap(0, "t", "<C-t>", "<C-\\><C-N>", term_opts)
-end
-
--- Automatically set these keymaps when opening a terminal
-vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
-
--- Mappings for navigating diagnostics with Trouble.nvim
-
--- ----------------------
--- Trouble.nvim Mappings
--- ----------------------
-
--- Function to simplify Trouble.nvim mappings
-local function trouble_map(key, command, description)
-    map("n", key, "<cmd>" .. command .. "<CR>", { desc = description, noremap = true, silent = true })
-end
-
--- Mappings for navigating diagnostics with Trouble.nvim
-trouble_map("<leader>tx", "Trouble diagnostics toggle", "Diagnostics Trouble")
-trouble_map("<leader>tX", "Trouble diagnostics toggle filter.buf=0", "Diagnostics Trouble Buffer")
-trouble_map("<leader>ts", "Trouble symbols toggle focus=false", "Trouble symbols")
-trouble_map(
-    "<leader>tl",
-    "Trouble lsp toggle focus=false win.position=right",
-    "Trouble LSP Definitions / references / ..."
-)
-trouble_map("<leader>tL", "Trouble loclist toggle", "Trouble Location List")
-trouble_map("<leader>tQ", "Trouble qflist toggle", "Trouble Quickfix List")

@@ -95,4 +95,8 @@ return {
             require("configs.live-preview") -- Load custom live-preview configuration
         end,
     },
+    {
+        "echasnovski/mini.icons",
+        version = false,
+    },
 }
