@@ -34,31 +34,33 @@ local mappings = {
     { key = "<leader>tQ", cmd = "Trouble qflist toggle", desc = "Trouble Quickfix List" },
 
     -- Terminal Mode Navigation Mappings (applied dynamically)
-    { mode = "t", key = "<C-h>", cmd = "<C-\\><C-N><C-w>h" },
-    { mode = "t", key = "<C-j>", cmd = "<C-\\><C-N><C-w>j" },
-    { mode = "t", key = "<C-k>", cmd = "<C-\\><C-N><C-w>k" },
-    { mode = "t", key = "<C-l>", cmd = "<C-\\><C-N><C-w>l" },
-    { mode = "t", key = "<C-t>", cmd = "<C-\\><C-N>" }, -- Quick exit to normal mode in terminal
+    { mode = "t", key = "<C-h>", cmd = [[<C-\><C-N><C-w>h]] },
+    { mode = "t", key = "<C-j>", cmd = [[<C-\><C-N><C-w>j]] },
+    { mode = "t", key = "<C-k>", cmd = [[<C-\><C-N><C-w>k]] },
+    { mode = "t", key = "<C-l>", cmd = [[<C-\><C-N><C-w>l]] },
+    { mode = "t", key = "<C-t>", cmd = [[<C-\><C-N>]] }, -- Quick exit to normal mode in terminal
 }
 
--- Apply all mappings in one step
+-- Function to apply terminal key mappings dynamically
+function _G.set_terminal_keymaps()
+    local term_opts = { noremap = true, silent = true }
+    for _, mapping in ipairs(mappings) do
+        if mapping.mode == "t" then
+            vim.api.nvim_buf_set_keymap(0, mapping.mode, mapping.key, mapping.cmd, term_opts)
+        end
+    end
+end
+
+-- Automatically apply terminal mappings when opening a terminal
+vim.cmd("autocmd! TermOpen term://* lua set_terminal_keymaps()")
+
+-- Apply other mappings immediately
 for _, mapping in ipairs(mappings) do
     local mode = mapping.mode or default_mode -- Use default mode if not specified
     local description = mapping.desc or "" -- Description is optional
 
-    if mode == "t" then
-        -- Special case: apply terminal mappings dynamically
-        vim.cmd(
-            "autocmd! TermOpen term://* lua vim.api.nvim_buf_set_keymap(0, '"
-                .. mode
-                .. "', '"
-                .. mapping.key
-                .. "', '"
-                .. mapping.cmd
-                .. "', { noremap = true, silent = true })"
-        )
-    else
-        -- Apply other mappings immediately
+    if mode ~= "t" then
+        -- Apply non-terminal mappings immediately
         map(mode, mapping.key, mapping.cmd, vim.tbl_extend("force", opts, { desc = description }))
     end
 end
