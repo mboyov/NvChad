@@ -54,6 +54,7 @@ dofile(vim.g.base46_cache .. "statusline") -- Load the statusline configuration
 
 require("options") -- Load custom options for Neovim
 require("nvchad.autocmds") -- Load custom auto commands
+require("configs.resize") -- Load custom resize panes
 
 -- Schedule the loading of custom mappings (delayed for better startup performance)
 vim.schedule(function()
