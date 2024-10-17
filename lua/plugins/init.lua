@@ -86,8 +86,8 @@ return {
         end,
     },
 
+    -- Live Preview Plugin
     {
-        -- Live Preview Plugin
         "brianhuster/live-preview.nvim",
         dependencies = { "brianhuster/autosave.nvim" }, -- Optional dependency for autosaving
         event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a file
@@ -95,8 +95,25 @@ return {
             require("configs.live-preview") -- Load custom live-preview configuration
         end,
     },
+
     {
         "echasnovski/mini.icons",
         version = false,
+    },
+
+    -- Noice Plugin
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            -- add any options here
+        },
+        dependencies = {
+            "MunifTanjim/nui.nvim",
+            "rcarriga/nvim-notify",
+        },
+        config = function()
+            require("configs.noice")
+        end,
     },
 }

@@ -12,7 +12,7 @@ o.softtabstop = 4 -- Number of spaces that <Tab> counts for while editing (in in
 
 -- Enable lazyredraw to improve performance by preventing screen redraws during macro execution,
 -- which can be beneficial for large files or slow operations.
-o.lazyredraw = true
+o.lazyredraw = false
 
 -- Option to enable cursorline (shows a line highlighting the cursor position)
 -- Uncomment the following line to enable cursorline both on the line number and in the line text
