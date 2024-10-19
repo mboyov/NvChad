@@ -2,7 +2,7 @@ return {
     -- Treesitter for syntax highlighting and code parsing
     {
         "nvim-treesitter/nvim-treesitter",
-        event = { "BufReadPre", "BufNewFile" }, -- Load Treesitter when opening a file or buffer
+        event = { "BufReadPre", "BufNewFile" }, -- Load Treesitter when opening a file or creating a new buffer
         config = function()
             require("configs.treesitter") -- Load custom Treesitter configuration
         end,
@@ -11,7 +11,7 @@ return {
     -- Neovim LSP configuration for language server support
     {
         "neovim/nvim-lspconfig",
-        event = { "BufReadPre", "BufNewFile" }, -- Load LSP configuration when editing a file
+        event = { "BufReadPre", "BufNewFile" }, -- Load LSP configuration when editing a file or creating a new buffer
         config = function()
             -- Load default LSP settings from NvChad
             require("nvchad.configs.lspconfig").defaults()
@@ -78,7 +78,7 @@ return {
     -- Trouble.nvim for diagnostics list and quickfix management
     {
         "folke/trouble.nvim",
-        event = { "BufReadPre", "BufNewFile" }, -- Trigger diagnostics loading on these events
+        event = { "BufReadPre", "BufNewFile" }, -- Trigger diagnostics loading when a file is opened or created
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- Use icons from nvim-web-devicons
         config = function()
             require("configs.trouble") -- Load custom configuration for Trouble
@@ -98,7 +98,7 @@ return {
     -- Minimal icon integration plugin
     {
         "echasnovski/mini.icons",
-        version = false, -- Load latest version without version constraints
+        version = false, -- Load the latest version without version constraints
     },
 
     -- Noice Plugin for better notifications and UI enhancements
@@ -111,6 +111,15 @@ return {
         },
         config = function()
             require("configs.noice") -- Load custom Noice configuration
+        end,
+    },
+
+    -- Pane resizer plugin for Neovim
+    {
+        "mboyov/pane-resizer",
+        event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a new buffer
+        config = function()
+            require("configs.pane-resizer") -- Load custom configuration for pane-resizer
         end,
     },
 }
