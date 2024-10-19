@@ -14,7 +14,7 @@ local function resize_panes()
 
     -- If the width is less than 49%, resize to 80%
     if current_width < total_width * 0.49 then
-        local new_width = math.floor(total_width * 0.8)
+        local new_width = math.floor(total_width * 0.6)
         api.nvim_win_set_width(current_win, new_width)
     end
 end
