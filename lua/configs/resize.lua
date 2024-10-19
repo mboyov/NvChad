@@ -1,6 +1,9 @@
 local api = vim.api
 
--- Function to resize the focused pane only, keeping the other panes unchanged
+-- Set a fixed width for NvimTree
+local NVIMTREE_WIDTH = 30 -- You can adjust this value as needed
+
+-- Function to resize the focused pane only, excluding NvimTree and keeping other panes unchanged
 local function resize_focused_pane()
     local current_win = api.nvim_get_current_win()
     local total_width = api.nvim_get_option("columns")
@@ -14,15 +17,15 @@ local function resize_focused_pane()
         local win_config = api.nvim_win_get_config(win)
 
         -- Identify NvimTree and exclude it from the resizing
-        if bufname:match("NvimTree") then
+        if bufname:match("NvimTree_") then
             nvimtree_win = win
         elseif win_config.relative == "" then -- Non-floating windows
             table.insert(non_floating_windows, win)
         end
     end
 
-    -- If there's only one buffer or less, skip resizing
-    if #non_floating_windows < 1 or current_win == nvimtree_win then
+    -- If NvimTree is the current window or there are no non-floating windows, skip resizing
+    if current_win == nvimtree_win or #non_floating_windows < 2 then
         return
     end
 
@@ -31,21 +34,58 @@ local function resize_focused_pane()
 
     -- Adjust total width if NvimTree is open (ignore its width for other windows)
     if nvimtree_win then
-        local nvimtree_width = api.nvim_win_get_width(nvimtree_win)
-        total_width = total_width - nvimtree_width
+        total_width = total_width - NVIMTREE_WIDTH
     end
 
     -- Calculate the width for the focused window (keeping the others unchanged)
     local focused_width = math.floor(total_width * 0.6)
 
     -- Resize the focused window to 60% of the available width
-    if current_win ~= nvimtree_win then
-        api.nvim_win_set_width(current_win, focused_width)
-    end
+    api.nvim_win_set_width(current_win, focused_width)
 end
 
--- Automatically resize the focused pane only, ignoring floating windows and adjusting for NvimTree
+-- Automatically resize the focused pane only, ignoring NvimTree and floating windows
 api.nvim_create_autocmd("WinEnter", {
     group = api.nvim_create_augroup("AutoResizePanes", { clear = true }),
-    callback = resize_focused_pane,
+    callback = function()
+        -- Check if the focused window is not NvimTree before resizing
+        local current_buf = api.nvim_buf_get_name(api.nvim_get_current_buf())
+        local is_nvimtree = current_buf:match("NvimTree_")
+
+        -- Only resize if the buffer is not NvimTree
+        if not is_nvimtree then
+            resize_focused_pane()
+        end
+    end,
+})
+
+-- Disable text wrapping when a new window is opened
+api.nvim_create_autocmd("BufWinEnter", {
+    group = api.nvim_create_augroup("DisableWrapOnOpen", { clear = true }),
+    callback = function()
+        api.nvim_win_set_option(0, "wrap", false) -- Disable text wrap for the new window
+    end,
+})
+
+-- Set a fixed width for NvimTree once and prevent any resizing after that
+api.nvim_create_autocmd("BufWinEnter", {
+    pattern = "NvimTree_*",
+    callback = function()
+        local nvimtree_win = api.nvim_get_current_win()
+        -- Set the NvimTree window to a fixed width
+        api.nvim_win_set_width(nvimtree_win, NVIMTREE_WIDTH)
+    end,
+})
+
+-- Prevent NvimTree from being resized when switching focus
+api.nvim_create_autocmd("WinLeave", {
+    pattern = "*",
+    callback = function()
+        local current_buf = api.nvim_buf_get_name(api.nvim_get_current_buf())
+        if current_buf:match("NvimTree_") then
+            -- Reset NvimTree's width to a fixed value when losing focus
+            local nvimtree_win = api.nvim_get_current_win()
+            api.nvim_win_set_width(nvimtree_win, NVIMTREE_WIDTH)
+        end
+    end,
 })
