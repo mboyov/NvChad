@@ -5,7 +5,7 @@ require("nvchad.mappings")
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true } -- Default options for all mappings
 
--- Default mode for mappings
+-- Default mode for mappings (normal mode by default)
 local default_mode = "n"
 
 -- Define all mappings
@@ -41,10 +41,10 @@ local mappings = {
     { key = "<leader>tQ", cmd = "Trouble qflist toggle", desc = "Toggle Trouble quickfix list" },
 
     -- Terminal Mode Navigation Mappings (applied dynamically)
-    { mode = "t", key = "<C-h>", cmd = [[<C-\><C-N><C-w>h]], desc = "The pane on the left" },
-    { mode = "t", key = "<C-j>", cmd = [[<C-\><C-N><C-w>j]], desc = "The pane below" },
-    { mode = "t", key = "<C-k>", cmd = [[<C-\><C-N><C-w>k]], desc = "The pane above" },
-    { mode = "t", key = "<C-l>", cmd = [[<C-\><C-N><C-w>l]], desc = "The pane on the right" },
+    { mode = "t", key = "<C-h>", cmd = [[<C-\><C-N><C-w>h]], desc = "Navigate to the pane on the left" },
+    { mode = "t", key = "<C-j>", cmd = [[<C-\><C-N><C-w>j]], desc = "Navigate to the pane below" },
+    { mode = "t", key = "<C-k>", cmd = [[<C-\><C-N><C-w>k]], desc = "Navigate to the pane above" },
+    { mode = "t", key = "<C-l>", cmd = [[<C-\><C-N><C-w>l]], desc = "Navigate to the pane on the right" },
 }
 
 -- Function to apply terminal key mappings dynamically

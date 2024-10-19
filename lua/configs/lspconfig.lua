@@ -19,15 +19,16 @@ lspconfig.servers = {
     "ts_ls", -- TypeScript language server
     "sqlls", -- SQL language server
     "intelephense", -- PHP language server
-    "emmet_ls", --
-    "html", --
-    "cssls", --
-    "bashls", --
+    "emmet_ls", -- Emmet language server for HTML and CSS
+    "html", -- HTML language server
+    "cssls", -- CSS language server
+    "bashls", -- Bash language server
 }
+
 -- Default LSP server configurations
 local default_servers = { "pyright", "dockerls", "yamlls", "ts_ls", "sqlls", "intelephense", "html", "cssls", "bashls" }
 
--- Loop through the list and apply default configurations
+-- Loop through the list and apply default configurations to each LSP server
 for _, lsp in ipairs(default_servers) do
     lspconfig[lsp].setup({
         on_attach = on_attach,
@@ -36,7 +37,7 @@ for _, lsp in ipairs(default_servers) do
     })
 end
 
--- Lua language server with custom settings
+-- Lua language server (lua_ls) with custom settings
 lspconfig.lua_ls.setup({
     on_attach = on_attach,
     on_init = on_init,
@@ -58,15 +59,16 @@ lspconfig.lua_ls.setup({
                     vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
                     "${3rd}/love2d/library", -- Add 3rd party libraries like Love2D
                 },
-                maxPreload = 100000, -- Maximum files to preload
+                maxPreload = 100000, -- Maximum number of files to preload
                 preloadFileSize = 10000, -- Preload files smaller than this size (in KB)
             },
         },
     },
 })
 
+-- Emmet language server configuration with custom file types
 lspconfig.emmet_ls.setup({
-    -- on_attach = on_attach,
+    -- on_attach can be added here if needed
     capabilities = capabilities,
     filetypes = {
         "css",
@@ -87,7 +89,7 @@ lspconfig.emmet_ls.setup({
         html = {
             options = {
                 -- For possible options, see: https://github.com/emmetio/emmet/blob/master/src/config.ts#L79-L267
-                ["bem.enabled"] = true,
+                ["bem.enabled"] = true, -- Enable BEM syntax in Emmet
             },
         },
     },
