@@ -37,6 +37,11 @@ require("noice").setup({
             opts = { skip = true }, -- Skip notifications with this message
         },
     },
+    integrations = {
+        fzf = { -- Integration with fzf-lua
+            enabled = true, -- Enable fzf-lua for fuzzy searching in Noice
+        },
+    },
 })
 
 -- Configuration for nvim-notify with Tokyo Night theme adjustments

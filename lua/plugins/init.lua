@@ -110,7 +110,7 @@ return {
             "rcarriga/nvim-notify", -- Notification plugin for Neovim
         },
         config = function()
-            require("configs.noice") -- Load custom Noice configuration
+            require("configs.noice") -- Load detailed Noice configuration
         end,
     },
 
@@ -120,6 +120,22 @@ return {
         event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a new buffer
         config = function()
             require("configs.pane-resizer") -- Load custom configuration for pane-resizer
+        end,
+    },
+
+    -- Install fzf-lua with LazyVim
+    {
+        "ibhagwan/fzf-lua", -- Fzf-lua plugin for fuzzy finding
+        dependencies = { "nvim-lua/plenary.nvim" }, -- Required dependency for fzf-lua
+        config = function()
+            require("fzf-lua").setup({
+                winopts = {
+                    -- Adjust appearance for fzf-lua window
+                    border = "rounded", -- Rounded border for the window
+                    height = 0.85, -- Set the height of the fzf window
+                    width = 0.80, -- Set the width of the fzf window
+                },
+            })
         end,
     },
 }
