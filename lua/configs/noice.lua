@@ -48,7 +48,7 @@ require("noice").setup({
 require("notify").setup({
     background_colour = "#000000", -- Transparent background to match the overall theme
     stages = "fade_in_slide_out", -- Notification appearance and disappearance effect
-    timeout = 3000, -- Duration before notification disappears
+    timeout = 10000, -- Duration before notification disappears
     render = "default", -- Use default rendering
     icons = {
         ERROR = "", -- Icon for errors

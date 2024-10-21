@@ -78,7 +78,7 @@ return {
     -- Trouble.nvim for diagnostics list and quickfix management
     {
         "folke/trouble.nvim",
-        event = { "BufReadPre", "BufNewFile" }, -- Trigger diagnostics loading when a file is opened or created
+        event = "VeryLazy", -- Load when needed to keep the startup fast
         dependencies = { "nvim-tree/nvim-web-devicons" }, -- Use icons from nvim-web-devicons
         config = function()
             require("configs.trouble") -- Load custom configuration for Trouble
@@ -89,7 +89,7 @@ return {
     {
         "brianhuster/live-preview.nvim",
         dependencies = { "brianhuster/autosave.nvim" }, -- Optional dependency for autosaving
-        event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a file
+        event = "VeryLazy", -- Load lazily to avoid unnecessary startup overhead
         config = function()
             require("configs.live-preview") -- Load custom live-preview configuration
         end,
@@ -98,6 +98,7 @@ return {
     -- Minimal icon integration plugin
     {
         "echasnovski/mini.icons",
+        event = "VeryLazy",
         version = false, -- Load the latest version without version constraints
     },
 
@@ -117,7 +118,7 @@ return {
     -- Pane resizer plugin for Neovim
     {
         "mboyov/pane-resizer.nvim",
-        event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a new buffer
+        event = "WinEnter", -- Load when entering a window
         config = function()
             require("configs.pane-resizer") -- Load custom configuration for pane-resizer
         end,
@@ -127,6 +128,7 @@ return {
     {
         "ibhagwan/fzf-lua", -- Fzf-lua plugin for fuzzy finding
         dependencies = { "nvim-lua/plenary.nvim" }, -- Required dependency for fzf-lua
+        event = "CmdlineEnter", -- Load only when entering command line
         config = function()
             require("fzf-lua").setup({
                 winopts = {
@@ -136,6 +138,16 @@ return {
                     width = 0.80, -- Set the width of the fzf window
                 },
             })
+        end,
+    },
+
+    -- Mini animate plugin for window and scroll animations
+    {
+        "echasnovski/mini.animate",
+        version = "*",
+        event = "VeryLazy", -- Load lazily to optimize performance
+        config = function()
+            require("configs.mini-animate") -- Load custom configuration for mini.animate
         end,
     },
 }
