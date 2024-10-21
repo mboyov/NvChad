@@ -9,6 +9,7 @@ local o = vim.o -- `vim.o` is used to set global options in Neovim
 o.shiftwidth = 4 -- Number of spaces to use for each step of (auto)indent
 o.tabstop = 4 -- Number of spaces that a <Tab> character represents
 o.softtabstop = 4 -- Number of spaces that <Tab> counts for while editing (in insert mode)
+o.expandtab = false -- Use actual tabs instead of spaces
 
 -- Enable lazyredraw to improve performance by preventing screen redraws during macro execution,
 -- which can be beneficial for large files or slow operations.
