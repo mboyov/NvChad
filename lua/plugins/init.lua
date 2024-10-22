@@ -108,7 +108,7 @@ return {
 	-- Pane resizer plugin for Neovim
 	{
 		"mboyov/pane-resizer.nvim",
-	    	event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a new buffer
+		event = { "BufReadPre", "BufNewFile" }, -- Load when opening or creating a new buffer
 		config = function()
 			require("configs.pane-resizer") -- Load custom configuration for pane-resizer
 		end,

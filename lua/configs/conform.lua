@@ -1,6 +1,4 @@
--- Conform.lua - Configuration with Prettier and auto-save handling
-
-local conform = require("conform")
+-- Conform.lua - Configuration for formatters with custom Prettier options and auto-save
 
 -- Function to apply the same formatter to multiple file types
 local function apply_formatter(formatter, file_types)
@@ -11,8 +9,8 @@ local function apply_formatter(formatter, file_types)
 	return formatters
 end
 
--- Set up Conform with custom formatters and Prettier options
-conform.setup({
+-- Set up configuration with custom formatters and Prettier options
+local options = {
 	formatters_by_ft = vim.tbl_extend("force", {
 		lua = { "stylua" }, -- Stylua for Lua
 		python = { "black" }, -- Black for Python
@@ -41,7 +39,7 @@ conform.setup({
 		timeout_ms = 1000, -- Timeout for larger files
 		lsp_fallback = true, -- Use LSP if no specific formatter is available
 	},
-})
+}
 
 -- Autocommand to trigger format on save for all configured file types
 vim.api.nvim_create_autocmd("BufWritePre", {
@@ -51,4 +49,5 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
-return conform
+-- Return the configuration table to be used by other modules or configurations
+return options
