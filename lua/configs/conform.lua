@@ -1,50 +1,62 @@
 -- Conform.lua - Configuration for formatters for different languages
 
--- Function to apply prettier to multiple languages
-local function apply_prettier_to_languages(languages)
+-- Function to apply custom options to formatters (except Stylua)
+local function apply_custom_formatters(languages, formatter, extra_args)
     local formatters = {}
     for _, lang in ipairs(languages) do
-        formatters[lang] = { "prettier" } -- Apply prettier with default configuration
+        formatters[lang] = {
+            formatter,
+            extra_args = extra_args, -- Apply custom options
+        }
     end
     return formatters
 end
 
--- Languages that should use prettier
+-- Languages that should use Prettier
 local prettier_languages = { "javascript", "typescript", "html", "css", "yaml", "json" }
 
--- Configuration table for conform.nvim
+-- Custom configuration options for Prettier
+local prettier_options = {
+    "--tab-width",
+    "4", -- Set tab width to 4
+    "--use-tabs", -- Use tabs instead of spaces
+    "--single-quote", -- Use single quotes
+    "--trailing-comma",
+    "es5", -- Add trailing commas in ES5 style
+}
+
+-- Formatter configuration via conform.nvim
 local options = {
-    -- Specify formatters for each file type (ft)
+    -- Specify formatters for each file type
     formatters_by_ft = vim.tbl_extend("force", {
-        -- Use "stylua" to format Lua files
-        lua = { "stylua" },
+        -- Use Stylua to format Lua files (respecting .stylua.toml configuration)
+        lua = { "stylua" }, -- Stylua will use its .stylua.toml configuration
 
-        -- Use "black" and "isort" to format and sort imports in Python files
-        python = { "black", "isort" },
+        -- Use "black" to format Python files
+        python = {
+            "black",
+            extra_args = { "--line-length", "88" }, -- Specific options for Black
+        },
 
-        -- Use "phpcsfixer" to format PHP files
-        php = { "php-cs-fixer" },
+        -- Use "php-cs-fixer" to format PHP files
+        php = {
+            "php-cs-fixer",
+            extra_args = { "--rules=@PSR2" }, -- Specific options for PHP-CS-Fixer
+        },
 
         -- Use "shfmt" to format Shell scripts
         sh = { "shfmt" },
 
+        -- Use "sqlfmt" to format SQL files
         sql = { "sqlfmt" },
+    }, apply_custom_formatters(prettier_languages, "prettier", prettier_options)), -- Apply Prettier with custom options
 
-        -- Add other formatters here if needed
-    }, apply_prettier_to_languages(prettier_languages)),
-
-    -- Formatting on save
+    -- Format on save
     format_on_save = {
-        timeout_ms = 1000, -- Increase timeout to avoid issues with large files
+        timeout_ms = 1000, -- Increased timeout to handle large files
         lsp_fallback = true, -- Use LSP formatter if no specific formatter is configured
-    },
-
-    -- You could also add configuration options for specific formatters here
-    formatter_options = {
-        black = { extra_args = { "--line-length", "88" } }, -- Custom black configuration
-        prettier = { extra_args = { "--single-quote", "--trailing-comma", "es5" } }, -- Prettier options
     },
 }
 
--- Return the options table to be used by other modules or configurations
+-- Return the options table
 return options
