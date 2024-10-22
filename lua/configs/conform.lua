@@ -1,62 +1,54 @@
--- Conform.lua - Configuration for formatters for different languages
+-- Conform.lua - Configuration with Prettier and auto-save handling
 
--- Function to apply custom options to formatters (except Stylua)
-local function apply_custom_formatters(languages, formatter, extra_args)
-    local formatters = {}
-    for _, lang in ipairs(languages) do
-        formatters[lang] = {
-            formatter,
-            extra_args = extra_args, -- Apply custom options
-        }
-    end
-    return formatters
+local conform = require("conform")
+
+-- Function to apply the same formatter to multiple file types
+local function apply_formatter(formatter, file_types)
+	local formatters = {}
+	for _, file_type in ipairs(file_types) do
+		formatters[file_type] = { formatter }
+	end
+	return formatters
 end
 
--- Languages that should use Prettier
-local prettier_languages = { "javascript", "typescript", "html", "css", "yaml", "json" }
+-- Set up Conform with custom formatters and Prettier options
+conform.setup({
+	formatters_by_ft = vim.tbl_extend("force", {
+		lua = { "stylua" }, -- Stylua for Lua
+		python = { "black" }, -- Black for Python
+		php = { "php-cs-fixer" }, -- PHP-CS-Fixer for PHP
+		sh = { "shfmt" }, -- shfmt for Shell
+		sql = { "sqlfmt" }, -- sqlfmt for SQL
+	}, apply_formatter("prettier", { "javascript", "typescript", "html", "css", "yaml", "json" })), -- Prettier for multiple file types
 
--- Custom configuration options for Prettier
-local prettier_options = {
-    "--tab-width",
-    "4", -- Set tab width to 4
-    "--use-tabs", -- Use tabs instead of spaces
-    "--single-quote", -- Use single quotes
-    "--trailing-comma",
-    "es5", -- Add trailing commas in ES5 style
-}
+	formatters = {
+		prettier = {
+			args = {
+				"--tab-width",
+				"4", -- Set tab width to 4
+				"--use-tabs", -- Use tabs instead of spaces
+				"--single-quote", -- Use single quotes
+				"--trailing-comma",
+				"es5", -- Trailing commas in ES5 style
+				"--stdin-filepath",
+				vim.api.nvim_buf_get_name(0), -- Ensure Prettier knows the file being processed
+			},
+			stdin = true, -- Prettier reads from stdin
+		},
+	},
+	format_on_save = {
+		enabled = true, -- Enable format on save
+		timeout_ms = 1000, -- Timeout for larger files
+		lsp_fallback = true, -- Use LSP if no specific formatter is available
+	},
+})
 
--- Formatter configuration via conform.nvim
-local options = {
-    -- Specify formatters for each file type
-    formatters_by_ft = vim.tbl_extend("force", {
-        -- Use Stylua to format Lua files (respecting .stylua.toml configuration)
-        lua = { "stylua" }, -- Stylua will use its .stylua.toml configuration
+-- Autocommand to trigger format on save for all configured file types
+vim.api.nvim_create_autocmd("BufWritePre", {
+	pattern = { "*.js", "*.ts", "*.html", "*.css", "*.yaml", "*.json", "*.lua", "*.py", "*.php", "*.sh", "*.sql" }, -- File types to format
+	callback = function()
+		require("conform").format({ async = false }) -- Format synchronously before saving
+	end,
+})
 
-        -- Use "black" to format Python files
-        python = {
-            "black",
-            extra_args = { "--line-length", "88" }, -- Specific options for Black
-        },
-
-        -- Use "php-cs-fixer" to format PHP files
-        php = {
-            "php-cs-fixer",
-            extra_args = { "--rules=@PSR2" }, -- Specific options for PHP-CS-Fixer
-        },
-
-        -- Use "shfmt" to format Shell scripts
-        sh = { "shfmt" },
-
-        -- Use "sqlfmt" to format SQL files
-        sql = { "sqlfmt" },
-    }, apply_custom_formatters(prettier_languages, "prettier", prettier_options)), -- Apply Prettier with custom options
-
-    -- Format on save
-    format_on_save = {
-        timeout_ms = 1000, -- Increased timeout to handle large files
-        lsp_fallback = true, -- Use LSP formatter if no specific formatter is configured
-    },
-}
-
--- Return the options table
-return options
+return conform
