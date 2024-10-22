@@ -118,7 +118,7 @@ return {
     -- Pane resizer plugin for Neovim
     {
         "mboyov/pane-resizer.nvim",
-        event = "WinEnter", -- Load when entering a window
+        event = { "BufWinEnter", "WinEnter" }, -- Load when entering or creating a new window
         config = function()
             require("configs.pane-resizer") -- Load custom configuration for pane-resizer
         end,
