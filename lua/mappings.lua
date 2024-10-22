@@ -24,22 +24,6 @@ local mappings = {
 	{ key = "<C-k>", cmd = "<cmd>TmuxNavigateUp<CR>", desc = "Navigate to the pane above" },
 	{ key = "<C-l>", cmd = "<cmd>TmuxNavigateRight<CR>", desc = "Navigate to the pane on the right" },
 
-	-- Trouble.nvim Mappings
-	{ key = "<leader>tx", cmd = "Trouble diagnostics toggle", desc = "Toggle Trouble diagnostics" },
-	{
-		key = "<leader>tX",
-		cmd = "Trouble diagnostics toggle filter.buf=0",
-		desc = "Toggle Trouble diagnostics for the current buffer",
-	},
-	{ key = "<leader>ts", cmd = "Trouble symbols toggle focus=false", desc = "Toggle Trouble symbols" },
-	{
-		key = "<leader>tl",
-		cmd = "Trouble lsp toggle focus=false win.position=right",
-		desc = "Toggle Trouble LSP definitions/references/...",
-	},
-	{ key = "<leader>tL", cmd = "Trouble loclist toggle", desc = "Toggle Trouble location list" },
-	{ key = "<leader>tQ", cmd = "Trouble qflist toggle", desc = "Toggle Trouble quickfix list" },
-
 	-- Terminal Mode Navigation Mappings (applied dynamically)
 	{ mode = "t", key = "<C-h>", cmd = [[<C-\><C-N><C-w>h]], desc = "Navigate to the pane on the left" },
 	{ mode = "t", key = "<C-j>", cmd = [[<C-\><C-N><C-w>j]], desc = "Navigate to the pane below" },
