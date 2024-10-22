@@ -74,7 +74,7 @@ rm -Force ~\AppData\Local\nvim-data
 3. Clone the repository:
 
 ```bash
-   git clone https://github.com/mboyov/NvChad.git ~/.config/nvim && nvim
+git clone https://github.com/mboyov/NvChad.git ~/.config/nvim && nvim
 ````
 **This repo is supposed to used as config by NvChad users!**
 
