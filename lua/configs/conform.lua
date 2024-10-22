@@ -1,51 +1,54 @@
--- Conform.lua - Optimized configuration with function to handle multiple file types
+-- Conform.lua - Configuration with Prettier and auto-save handling
 
 local conform = require("conform")
 
 -- Function to apply the same formatter to multiple file types
 local function apply_formatter(formatter, file_types)
-    local formatters = {}
-    for _, file_type in ipairs(file_types) do
-        formatters[file_type] = { formatter }
-    end
-    return formatters
+	local formatters = {}
+	for _, file_type in ipairs(file_types) do
+		formatters[file_type] = { formatter }
+	end
+	return formatters
 end
 
 -- Set up Conform with custom formatters and Prettier options
 conform.setup({
-    formatters_by_ft = vim.tbl_extend("force", {
-        lua = { "stylua" }, -- Stylua for Lua
-        python = { "black" }, -- Black for Python
-        php = { "php-cs-fixer" }, -- PHP-CS-Fixer for PHP
-        sh = { "shfmt" }, -- shfmt for Shell
-        sql = { "sqlfmt" }, -- sqlfmt for SQL
-    }, apply_formatter("prettier", { "javascript", "typescript", "html", "css", "yaml", "json" })), -- Prettier for multiple file types
+	formatters_by_ft = vim.tbl_extend("force", {
+		lua = { "stylua" }, -- Stylua for Lua
+		python = { "black" }, -- Black for Python
+		php = { "php-cs-fixer" }, -- PHP-CS-Fixer for PHP
+		sh = { "shfmt" }, -- shfmt for Shell
+		sql = { "sqlfmt" }, -- sqlfmt for SQL
+	}, apply_formatter("prettier", { "javascript", "typescript", "html", "css", "yaml", "json" })), -- Prettier for multiple file types
 
-    formatters = {
-        prettier = {
-            args = {
-                "--tab-width", "4", -- Set tab width to 4
-                "--use-tabs", -- Use tabs instead of spaces
-                "--single-quote", -- Use single quotes
-                "--trailing-comma", "es5", -- Trailing commas in ES5 style
-                "--stdin-filepath", vim.api.nvim_buf_get_name(0), -- Ensure Prettier knows the file being processed
-            },
-            stdin = true, -- Prettier reads from stdin
-        },
-    },
-    format_on_save = {
-        enabled = true, -- Enable format on save
-        timeout_ms = 1000, -- Timeout for larger files
-        lsp_fallback = true, -- Use LSP if no specific formatter is available
-    },
+	formatters = {
+		prettier = {
+			args = {
+				"--tab-width",
+				"4", -- Set tab width to 4
+				"--use-tabs", -- Use tabs instead of spaces
+				"--single-quote", -- Use single quotes
+				"--trailing-comma",
+				"es5", -- Trailing commas in ES5 style
+				"--stdin-filepath",
+				vim.api.nvim_buf_get_name(0), -- Ensure Prettier knows the file being processed
+			},
+			stdin = true, -- Prettier reads from stdin
+		},
+	},
+	format_on_save = {
+		enabled = true, -- Enable format on save
+		timeout_ms = 1000, -- Timeout for larger files
+		lsp_fallback = true, -- Use LSP if no specific formatter is available
+	},
 })
 
--- Autocommand to trigger format on save for specific file types
+-- Autocommand to trigger format on save for all configured file types
 vim.api.nvim_create_autocmd("BufWritePre", {
-    pattern = { "*.js", "*.ts", "*.html", "*.css", "*.yaml", "*.json" }, -- File types to format
-    callback = function()
-        require("conform").format({ async = false }) -- Format synchronously before saving
-    end,
+	pattern = { "*.js", "*.ts", "*.html", "*.css", "*.yaml", "*.json", "*.lua", "*.py", "*.php", "*.sh", "*.sql" }, -- File types to format
+	callback = function()
+		require("conform").format({ async = false }) -- Format synchronously before saving
+	end,
 })
 
 return conform

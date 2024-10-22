@@ -7,7 +7,7 @@ column_width = 120  # Sets the maximum column width to 120 characters
 line_endings = "Unix"  # Use Unix-style line endings (LF), as opposed to Windows (CRLF)
 
 # The type of indentation to use: either spaces or tabs
-indent_type = "Spaces"  # Specifies that indentation should be done using spaces, not tabs
+indent_type = "Tabs"  # Specifies that indentation should be done using spaces, not tabs
 
 # The number of spaces to use for each indentation level
 indent_width = 4  # Each indentation level will be 4 spaces wide
