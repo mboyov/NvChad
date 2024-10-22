@@ -16,8 +16,10 @@ animate.setup({
 		enable = true, -- Enable cursor animations (for moving between words)
 		timing = animate.gen_timing.linear({ duration = 5 }), -- Customize the duration for cursor movements
 	},
-	open = {
-		enable = true, -- Enable animations for opening new windows or splits
-		timing = animate.gen_timing.linear({ duration = 100 }), -- Fast animation for opening windows
-	},
+	-- open = {
+	-- 	enable = true, -- Enable animations for opening new windows or splits
+	-- 	timing = animate.gen_timing.linear({ duration = 100 }), -- Fast animation for opening windows
+	-- },
+	open = { enable = false },
+	close = { enable = false },
 })
