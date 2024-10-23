@@ -123,4 +123,11 @@ return {
 			require("configs.mini-animate") -- Load custom configuration for mini.animate
 		end,
 	},
+
+	-- Plugin setup in init.lua or similar file
+	{
+		"folke/trouble.nvim",
+		opts = {}, -- for default options, refer to the configuration section for custom setup.
+		cmd = "Trouble",
+	},
 }
