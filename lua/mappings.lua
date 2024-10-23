@@ -29,6 +29,22 @@ local mappings = {
 	{ mode = "t", key = "<C-j>", cmd = [[<C-\><C-N><C-w>j]], desc = "Navigate to the pane below" },
 	{ mode = "t", key = "<C-k>", cmd = [[<C-\><C-N><C-w>k]], desc = "Navigate to the pane above" },
 	{ mode = "t", key = "<C-l>", cmd = [[<C-\><C-N><C-w>l]], desc = "Navigate to the pane on the right" },
+
+	-- Trouble.nvim Mappings
+	{ key = "<leader>tx", cmd = "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
+	{
+		key = "<leader>tX",
+		cmd = "<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
+		desc = "Buffer Diagnostics (Trouble)",
+	},
+	{ key = "<leader>ts", cmd = "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
+	{
+		key = "<leader>tl",
+		cmd = "<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
+		desc = "LSP Definitions / references / ... (Trouble)",
+	},
+	{ key = "<leader>tL", cmd = "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
+	{ key = "<leader>tQ", cmd = "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
 }
 
 -- Function to apply terminal key mappings dynamically

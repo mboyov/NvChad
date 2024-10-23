@@ -17,8 +17,8 @@ local options = {
 		php = { "php-cs-fixer" }, -- PHP-CS-Fixer for PHP
 		sh = { "shfmt" }, -- shfmt for Shell
 		sql = { "sqlfmt" }, -- sqlfmt for SQL
-	}, apply_formatter("prettier", { "javascript", "typescript", "html", "css", "yaml", "json" })), -- Prettier for multiple file types
-
+		-- Prettier for multiple file types
+	}, apply_formatter("prettier", { "javascript", "typescript", "html", "css", "yaml", "json" })),
 	formatters = {
 		prettier = {
 			args = {
@@ -43,7 +43,8 @@ local options = {
 
 -- Autocommand to trigger format on save for all configured file types
 vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.js", "*.ts", "*.html", "*.css", "*.yaml", "*.json", "*.lua", "*.py", "*.php", "*.sh", "*.sql" }, -- File types to format
+	-- File types to format
+	pattern = { "*.js", "*.ts", "*.html", "*.css", "*.yaml", "*.json", "*.lua", "*.py", "*.php", "*.sh", "*.sql" },
 	callback = function()
 		require("conform").format({ async = false }) -- Format synchronously before saving
 	end,
