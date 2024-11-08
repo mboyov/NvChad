@@ -1,0 +1,9 @@
+# .stylua.toml - Configuration for Stylua code formatter
+
+column_width = 120           # Maximum line width: 120 characters
+line_endings = "Unix"        # Use Unix-style line endings
+indent_type = "Tabs"         # Use tabs for indentation
+indent_width = 2             # Set tab width to 2 spaces
+quote_style = "AutoPreferDouble" # Prefer double quotes unless single quotes are necessary
+call_parentheses = "None"    # Omit parentheses for functions with no arguments
+

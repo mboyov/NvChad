@@ -1,0 +1,3 @@
+# Ignore the lazy-lock.json file used by Neovim plugin manager
+lazy-lock.json
+
