@@ -17,6 +17,12 @@ local mappings = {
 	{ key = "<C-k>", cmd = "<cmd>TmuxNavigateUp<CR>", desc = "Navigate to the above pane" },
 	{ key = "<C-l>", cmd = "<cmd>TmuxNavigateRight<CR>", desc = "Navigate to the right pane" },
 
+	-- Terminal Mode Navigation Mappings (applied dynamically)
+	{ mode = "t", key = "<C-h>", cmd = [[<C-\><C-N><C-w>h]], desc = "Navigate to the pane on the left" },
+	{ mode = "t", key = "<C-j>", cmd = [[<C-\><C-N><C-w>j]], desc = "Navigate to the pane below" },
+	{ mode = "t", key = "<C-k>", cmd = [[<C-\><C-N><C-w>k]], desc = "Navigate to the pane above" },
+	{ mode = "t", key = "<C-l>", cmd = [[<C-\><C-N><C-w>l]], desc = "Navigate to the pane on the right" },
+
 	-- Scrolling with centered screen position
 	{ key = "<C-d>", cmd = "<C-d>zz", desc = "Scroll down and center" },
 	{ key = "<C-u>", cmd = "<C-u>zz", desc = "Scroll up and center" },
@@ -40,6 +46,9 @@ local mappings = {
 	{ key = "<leader>gx", cmd = ":tabclose<CR>", desc = "Close the current tab" },
 	{ key = "<leader>gn", cmd = ":tabn<CR>", desc = "Go to the next tab" },
 	{ key = "<leader>gp", cmd = ":tabp<CR>", desc = "Go to the previous tab" },
+
+	-- Todo Comment
+	{ key = "<leader>ft", cmd = ":TodoTelescope<CR>", desc = "TodoTelescope" },
 
 	-- Toggle diagnostics
 	{

@@ -11,7 +11,15 @@ local options = {
 
 	formatters = {
 		prettier = {
-			args = { "--use-tabs", "--tab-width", "2", "--stdin-filepath", vim.api.nvim_buf_get_name(0) },
+			args = {
+				"--use-tabs",
+				"--tab-width",
+				"2",
+				"--parser",
+				"babel",
+				"--stdin-filepath",
+				vim.api.nvim_buf_get_name(0),
+			},
 			stdin = true,
 		},
 	},
@@ -24,7 +32,7 @@ local options = {
 }
 
 -- Assign Prettier to multiple file types
-for _, ft in ipairs { "javascript", "typescript", "html", "css", "yaml", "json", "dockerfile" } do
+for _, ft in ipairs { "javascript", "typescript", "html", "css", "yaml", "json" } do
 	options.formatters_by_ft[ft] = { "prettier" }
 end
 

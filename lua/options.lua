@@ -16,3 +16,6 @@ o.smartindent = true -- Enable smart indentation based on syntax
 
 -- Performance setting
 o.lazyredraw = false -- Disable redraw during macros for performance
+
+-- Obsidian
+o.conceallevel = 2

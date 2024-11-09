@@ -7,9 +7,8 @@ local M = {}
 
 M.base46 = {
 	theme = "tokyonight", -- Set the theme for Neovim UI
-
 	-- Uncomment for transparency in the Neovim UI
-	-- transparency = true,
+	transparency = true,
 
 	-- Uncomment to apply style overrides
 	-- hl_override = {
