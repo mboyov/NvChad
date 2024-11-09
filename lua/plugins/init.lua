@@ -31,7 +31,7 @@ return {
 	-- Mason-conform: Manages formatters with Mason integration, enhancing code formatting capabilities
 	{
 		"zapling/mason-conform.nvim",
-		event = { "BufReadPre", "BufNewFile", "BufWritePre" }, -- Load on file read, write, or creation
+		event = { "VeryLazy", "BufReadPre", "BufNewFile", "BufWritePre" }, -- Load on file read, write, or creation
 		dependencies = { "stevearc/conform.nvim" }, -- Requires conform for formatting operations
 		config = function()
 			require "configs.conform" -- Load conform configuration
@@ -58,6 +58,7 @@ return {
 	{
 		"folke/trouble.nvim",
 		cmd = "Trouble", -- Load only when the Trouble command is executed
+		opts = {},
 	},
 
 	-- Obsidian: Integration for note-taking with Obsidian, optimized for markdown file management
