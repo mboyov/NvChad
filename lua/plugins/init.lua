@@ -1,73 +1,105 @@
 return {
-	-- Treesitter for syntax highlighting and code parsing
+	-- Treesitter: Provides advanced syntax highlighting and code parsing for various languages
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufReadPre", "BufNewFile" }, -- Load on file open or new buffer creation
+		event = { "BufReadPre", "BufNewFile" }, -- Load Treesitter when a file is opened or a new buffer is created
 		config = function()
-			require "configs.treesitter"
+			require "configs.treesitter" -- Load Treesitter configuration
 		end,
 	},
 
-	-- Mason for managing LSP servers
+	-- Mason: Manages Language Server Protocol (LSP) servers, allowing automatic installation and configuration
 	{
 		"williamboman/mason-lspconfig.nvim",
-		event = "VeryLazy", -- Load lazily to optimize startup
-		dependencies = { "neovim/nvim-lspconfig" },
+		event = "VeryLazy", -- Load lazily to avoid delaying startup
+		dependencies = { "neovim/nvim-lspconfig" }, -- Requires nvim-lspconfig for LSP setup
 		config = function()
-			require "configs.lspconfig"
+			require "configs.lspconfig" -- Load LSP configurations
 		end,
 	},
 
-	-- Mason integration for nvim-lint
+	-- Mason-nvim-lint: Integrates Mason to install and manage linters through nvim-lint
 	{
 		"rshkarin/mason-nvim-lint",
-		event = "VeryLazy", -- Lazy load for better performance
-		dependencies = { "mfussenegger/nvim-lint" },
+		event = "VeryLazy", -- Lazy load for enhanced startup performance
+		dependencies = { "mfussenegger/nvim-lint" }, -- Requires nvim-lint to execute linter tasks
 		config = function()
-			require "configs.lint"
+			require "configs.lint" -- Load lint configuration
 		end,
 	},
 
-	-- Conform plugin for code formatting
+	-- Mason-conform: Manages formatters with Mason integration, enhancing code formatting capabilities
 	{
-		"stevearc/conform.nvim",
-		event = "BufWritePre",
-		dependencies = { "zapling/mason-conform.nvim" },
+		"zapling/mason-conform.nvim",
+		event = { "BufReadPre", "BufNewFile", "BufWritePre" }, -- Load on file read, write, or creation
+		dependencies = { "stevearc/conform.nvim" }, -- Requires conform for formatting operations
 		config = function()
-			require "configs.conform"
+			require "configs.conform" -- Load conform configuration
 		end,
 	},
 
-	-- Tmux and Neovim pane navigation
+	-- Tmux and Neovim pane navigation: Enables smooth navigation between Tmux and Neovim panes
 	{
 		"christoomey/vim-tmux-navigator",
-		lazy = false, -- Load immediately for smooth navigation
-		config = function()
-			-- No additional setup required
-		end,
+		event = "VeryLazy", -- Lazy load for performance
 	},
 
-	-- Mini icons plugin
-	{
-		"echasnovski/mini.icons",
-		event = "VeryLazy",
-		version = false, -- Always use the latest version
-	},
-
-	-- Mini animate plugin for smooth UI animations
+	-- Mini animate plugin: Adds animations to improve the visual transitions within the UI
 	{
 		"echasnovski/mini.animate",
-		version = "*",
+		version = "*", -- Use latest version
 		event = "VeryLazy", -- Lazy load for performance
 		config = function()
-			require "configs.mini-animate"
+			require "configs.mini-animate" -- Load mini-animate configuration
 		end,
 	},
 
-	-- Trouble plugin for managing diagnostics and quickfix lists
+	-- Trouble: Simplifies diagnostics management, consolidating errors and warnings into a single interface
 	{
 		"folke/trouble.nvim",
-		opts = {}, -- Use default options
-		cmd = "Trouble", -- Load on Trouble command
+		cmd = "Trouble", -- Load only when the Trouble command is executed
+	},
+
+	-- Obsidian: Integration for note-taking with Obsidian, optimized for markdown file management
+	{
+		"epwalsh/obsidian.nvim",
+		version = "*", -- Always use the latest stable version
+		event = "VeryLazy", -- Load lazily to optimize resources
+		ft = "markdown", -- Load only for markdown file types
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- Essential Lua utilities for plugin functionality
+		},
+		opts = require "configs.obsidian", -- Load options from Obsidian config
+	},
+
+	-- Markdown plugin: Provides rendering for markdown with icon support and syntax highlighting
+	{
+		"MeanderingProgrammer/markdown.nvim",
+		event = "VeryLazy", -- Lazy load for resource optimization
+		main = "render-markdown", -- Main module for rendering markdown
+		name = "render-markdown", -- Name identifier for plugin configuration
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter", -- Syntax highlighting dependency
+			"nvim-tree/nvim-web-devicons",
+		},
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {},
+		config = function()
+			require "configs.markdown" -- Load markdown configuration
+		end,
+	},
+
+	-- Todo-Comments: Highlights and allows searching for TODO comments in code
+	{
+		"folke/todo-comments.nvim",
+		event = "VeryLazy", -- Load lazily to avoid impacting startup
+		dependencies = {
+			"nvim-lua/plenary.nvim", -- Lua utilities for functionality
+			"nvim-telescope/telescope.nvim", -- Telescope integration for searching TODO comments
+		},
+		config = function()
+			require "configs.todo" -- Load todo-comments configuration
+		end,
 	},
 }
