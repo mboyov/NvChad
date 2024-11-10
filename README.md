@@ -56,20 +56,6 @@ git clone https://github.com/junegunn/fzf-git.sh.git ~/.
 rm -rf ~/.config/nvim
 rm -rf ~/.local/state/nvim
 rm -rf ~/.local/share/nvim
-
-# Flatpak (linux)
-rm -rf ~/.var/app/io.neovim.nvim/config/nvim
-rm -rf ~/.var/app/io.neovim.nvim/data/nvim
-rm -rf ~/.var/app/io.neovim.nvim/.local/state/nvim
-
-# Windows CMD
-rd -r ~\AppData\Local\nvim
-rd -r ~\AppData\Local\nvim-data
-
-# Windows PowerShell
-rm -Force ~\AppData\Local\nvim
-rm -Force ~\AppData\Local\nvim-data
-
 ```
 3. Clone the repository:
 
@@ -89,6 +75,8 @@ Feel free to open issues or pull requests if you have suggestions for improvemen
 This project is unlicensed
 
 ## Credits
+- [kickstart.nvim](https://github.com/nvim-lua/kickstart.nvim) A starting point for Neovim
+- [NvChad](https://nvchad.com) Blazing fast Neovim config providing solid defaults and a beautiful UI
 - [Lazyvim starter](https://github.com/LazyVim/starter) as nvchad's starter was inspired by Lazyvim's . It made a lot of things easier!
 
 [contributors-shield]: https://img.shields.io/github/contributors/mboyov/NvChad.svg?style=for-the-badge

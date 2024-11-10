@@ -24,8 +24,8 @@ local mappings = {
 	{ mode = "t", key = "<C-l>", cmd = [[<C-\><C-N><C-w>l]], desc = "Navigate to the pane on the right" },
 
 	-- Scrolling with centered screen position
-	{ key = "<C-d>", cmd = "<C-d>zz", desc = "Scroll down and center" },
-	{ key = "<C-u>", cmd = "<C-u>zz", desc = "Scroll up and center" },
+	{ key = "<C-t>", cmd = "<C-d>zz", desc = "Scroll down and center" },
+	{ key = "<C-b>", cmd = "<C-u>zz", desc = "Scroll up and center" },
 	{ key = "n", cmd = "nzzzv", desc = "Next search result, centered" },
 	{ key = "N", cmd = "Nzzzv", desc = "Previous search result, centered" },
 
@@ -49,6 +49,11 @@ local mappings = {
 
 	-- Todo Comment
 	{ key = "<leader>ft", cmd = ":TodoTelescope<CR>", desc = "TodoTelescope" },
+
+	-- Diagnostics keymaps
+
+	{ key = "<leader>dn", cmd = vim.diagnostic.goto_prev, desc = "Jump to the previous Diagnostics" },
+	{ key = "<leader>dp", cmd = vim.diagnostic.goto_next, desc = "Jump to the next Diagnostics" },
 
 	-- Toggle diagnostics
 	{

@@ -103,4 +103,18 @@ return {
 			require "configs.todo" -- Load todo-comments configuration
 		end,
 	},
+
+	-- Noice : Better notifications and UI enhancements
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy", -- Load lazily to optimize startup
+		opts = {},
+		dependencies = {
+			"MunifTanjim/nui.nvim", -- UI components library
+			"rcarriga/nvim-notify", -- Notification plugin for Neovim
+		},
+		config = function()
+			require "configs.noice" -- Load detailed Noice configuration
+		end,
+	},
 }
